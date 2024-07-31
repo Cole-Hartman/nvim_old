@@ -137,7 +137,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 --  To update plugins you can run
 --    :Lazy update
---
+-- PLUGINS
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
@@ -148,7 +148,6 @@ require('lazy').setup({
   --
   -- Use `opts = {}` to force a plugin to be loaded.
   --
-
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -240,10 +239,6 @@ require('lazy').setup({
       -- The easiest way to use Telescope, is to start by doing something like:
       --  :Telescope help_tags
       --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
       -- Two important keymaps to use while in Telescope are:
       --  - Insert mode: <c-/>
       --  - Normal mode: ?
@@ -313,7 +308,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- LSP Configuration & Plugins
+  -- --------------------------------------------------------------------------------------------------------
+  { -- !LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -340,42 +336,14 @@ require('lazy').setup({
       { 'Bilal2453/luvit-meta', lazy = true },
     },
     config = function()
-      -- Brief aside: **What is LSP?**
-      --
-      -- LSP is an initialism you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
       --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
+      --  That is to say, every time a new file is opened that is associated with
+      --  an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
+      --  function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
+          -- Here we use Lua to define a helper function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -520,14 +488,14 @@ require('lazy').setup({
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      -- FORMATTERS
+      -- $FORMATTER
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
         'prettierd',
         -- 'isort',
-        'autopep8',
-        'black',
+        -- 'black',
+        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -574,50 +542,11 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- conform can also run multiple formatters sequentially
-        python = { 'autopep8', 'black' },
-        -- you can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
+        python = { 'ruff' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
-
-  -- { -- Autoformat
-  --   'stevearc/conform.nvim',
-  --   event = { 'BufWritePre' },
-  --   cmd = { 'ConformInfo' },
-  --   keys = {
-  --     {
-  --       '<leader>f',
-  --       function()
-  --         require('conform').format { async = true, lsp_fallback = true }
-  --       end,
-  --       mode = '',
-  --       desc = '[F]ormat buffer',
-  --     },
-  --   },
-  --   opts = {
-  --     notify_on_error = false,
-  --     format_on_save = function(bufnr)
-  --       -- Disable "format_on_save lsp_fallback" for languages that don't
-  --       -- have a well standardized coding style. You can add additional
-  --       -- languages here or re-enable it for the disabled ones.
-  --       local disable_filetypes = { c = true, cpp = true }
-  --       return {
-  --         timeout_ms = 500,
-  --         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-  --       }
-  --     end,
-  --     formatters_by_ft = {
-  --       lua = { 'stylua' },
-  --       python = { 'isort', 'black' },
-  --       -- You can use a sub-list to tell conform to run *until* a formatter
-  --       -- is found.
-  --       javascript = { { 'prettierd', 'prettier' } },
-  --       typescript = { { 'prettierd', 'prettier' } },
-  --     },
-  --   },
-  -- },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
