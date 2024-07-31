@@ -137,8 +137,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 --  To update plugins you can run
 --    :Lazy update
--- PLUGINS
--- NOTE: Here is where you install your plugins.
+-- NOTE: Here is where you install your !plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -308,7 +307,6 @@ require('lazy').setup({
     end,
   },
 
-  -- --------------------------------------------------------------------------------------------------------
   { -- !LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -435,7 +433,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+      -- Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
       --  Add any additional override configuration in the following tables. Available keys are:
       --  - cmd (table): Override the default command used to start the server
@@ -488,14 +486,14 @@ require('lazy').setup({
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      -- $FORMATTER
+      -- !FORMATTER
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
+        'black',
+        'isort',
+        'prettier',
         'prettierd',
-        -- 'isort',
-        -- 'black',
-        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -541,8 +539,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- conform can also run multiple formatters sequentially
-        python = { 'ruff' },
+        python = { 'black', 'isort' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
