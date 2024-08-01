@@ -491,7 +491,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua',
         'black',
-        'isort',
+        'usort',
         'prettier',
         'prettierd',
       })
@@ -539,7 +539,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { 'black', 'isort' },
+        python = { 'black', 'usort' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
