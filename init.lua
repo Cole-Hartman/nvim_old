@@ -442,7 +442,13 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          cmd = { 'clangd', '--background-index', '--clang-tidy' },
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+          init_options = {
+            clangdFileStatus = true,
+          },
+        },
         -- gopls = {},
         pyright = {},
         tsserver = {},
@@ -494,6 +500,8 @@ require('lazy').setup({
         'usort',
         'prettier',
         'prettierd',
+        'clangd',
+        'clang-format',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -541,6 +549,8 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'black', 'usort' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        cpp = { 'clang-format' },
+        c = { 'clang-format' },
       },
     },
   },
