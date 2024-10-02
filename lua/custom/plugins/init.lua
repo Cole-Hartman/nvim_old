@@ -214,11 +214,24 @@ return {
         css = true,
         js = true,
         host = '127.0.0.1',
-        -- Custom browser command for WSL
-        browser = 'explorer.exe',
-        -- Additional arguments
-        args = { '--browser', "explorer.exe 'http://127.0.0.1:8080'" },
       }
     end,
   },
+
+  -- Telescope conventional commits
+  {
+    'olacin/telescope-cc.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      -- Load the extension
+      require('telescope').load_extension 'conventional_commits'
+
+      -- Set up the keybind
+      vim.keymap.set('n', '<leader>cc', function()
+        require('telescope').extensions.conventional_commits.conventional_commits()
+      end, { desc = 'Conventional Commits' })
+    end,
+  },
+
+  -- Ducky typing
 }
