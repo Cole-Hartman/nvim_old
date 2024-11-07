@@ -47,6 +47,9 @@ vim.opt.signcolumn = 'yes'
 -- Decrease update time
 vim.opt.updatetime = 250
 
+-- Set conceallevel for Obsidian's UI features
+vim.opt.conceallevel = 1
+
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300

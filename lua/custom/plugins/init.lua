@@ -166,4 +166,55 @@ return {
       }
     end,
   },
+
+  -- vim be good
+  {
+    'ThePrimeagen/vim-be-good',
+  },
+
+  -- neorg
+  {
+    'nvim-neorg/neorg',
+    build = ':Neorg sync-parsers',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      { 'pysan3/neorg-templates', dependencies = { 'L3MON4D3/LuaSnip' } },
+    },
+    config = function()
+      vim.opt.conceallevel = 2
+      vim.opt.foldenable = false -- Disable folding by default
+
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+          ['core.concealer'] = {
+            config = {
+              icon_preset = 'diamond',
+            },
+          },
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                dsa = '~/neorg/dsa',
+              },
+            },
+          },
+          ['core.integrations.treesitter'] = {
+            config = {
+              configure_parsers = true,
+              fold_markers = {
+                enabled = false, -- Disable automatic folding
+              },
+            },
+          },
+          ['external.templates'] = {
+            config = {
+              templates_dir = '~/neorg/templates',
+            },
+          },
+        },
+      }
+    end,
+  },
 }
