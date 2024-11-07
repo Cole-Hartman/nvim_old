@@ -185,6 +185,20 @@ return {
       vim.opt.conceallevel = 2
       vim.opt.foldenable = false -- Disable folding by default
 
+      -- global keybinds
+      vim.keymap.set('n', '<leader>n', '<cmd>Neorg workspace home<CR>', { buffer = true, desc = 'Neorg' })
+
+      -- keybinds when in .norg file
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'norg',
+        callback = function()
+          vim.keymap.set('n', '<leader>n', '<cmd>Neorg workspace home<CR>', { buffer = true, desc = 'Neorg' })
+          vim.keymap.set('n', '<leader>1', '<cmd>Neorg workspace dsa<CR>', { buffer = true, desc = 'Switch to DSA workspace' })
+          vim.keymap.set('n', '<leader>2', '<cmd>Neorg workspace class<CR>', { buffer = true, desc = 'Switch to class workspace' })
+          vim.keymap.set('n', '<leader>3', '<cmd>Neorg workspace internship<CR>', { buffer = true, desc = 'Switch to internship workspace' })
+        end,
+      })
+
       require('neorg').setup {
         load = {
           ['core.defaults'] = {},
@@ -196,7 +210,10 @@ return {
           ['core.dirman'] = {
             config = {
               workspaces = {
-                dsa = '~/neorg/dsa',
+                home = '~/neorg/home/',
+                dsa = '~/neorg/dsa/',
+                class = '~/neorg/class/',
+                internship = '~/neorg/internship/',
               },
             },
           },
