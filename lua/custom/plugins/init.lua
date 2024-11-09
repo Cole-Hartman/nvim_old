@@ -173,65 +173,65 @@ return {
   },
 
   -- neorg
-  {
-    'nvim-neorg/neorg',
-    build = ':Neorg sync-parsers',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      { 'pysan3/neorg-templates', dependencies = { 'L3MON4D3/LuaSnip' } },
-    },
-    config = function()
-      vim.opt.conceallevel = 2
-      vim.opt.foldenable = false -- Disable folding by default
-
-      -- global keybinds
-      vim.keymap.set('n', '<leader>a', '<cmd>Neorg workspace home<CR>', { desc = 'Neorg home' })
-
-      -- keybinds when in .norg file
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'norg',
-        callback = function()
-          vim.keymap.set('n', '<leader>a', '<cmd>Neorg workspace home<CR>', { desc = 'Neorg home' })
-          vim.keymap.set('n', '<leader>1', '<cmd>Neorg workspace dsa<CR>', { buffer = true, desc = 'Switch to DSA workspace' })
-          vim.keymap.set('n', '<leader>2', '<cmd>Neorg workspace class<CR>', { buffer = true, desc = 'Switch to class workspace' })
-          vim.keymap.set('n', '<leader>3', '<cmd>Neorg workspace internship<CR>', { buffer = true, desc = 'Switch to internship workspace' })
-        end,
-      })
-
-      require('neorg').setup {
-        load = {
-          ['core.defaults'] = {},
-          ['core.concealer'] = {
-            config = {
-              icon_preset = 'diamond',
-            },
-          },
-          ['core.dirman'] = {
-            config = {
-              workspaces = {
-                home = '~/neorg/home/',
-                dsa = '~/neorg/dsa/',
-                class = '~/neorg/class/',
-                internship = '~/neorg/internship/',
-              },
-            },
-          },
-          ['core.integrations.treesitter'] = {
-            config = {
-              configure_parsers = true,
-              fold_markers = {
-                enabled = false, -- Disable automatic folding
-              },
-            },
-          },
-          ['external.templates'] = {
-            config = {
-              templates_dir = '~/neorg/templates',
-            },
-          },
-        },
-      }
-    end,
-  },
+  -- {
+  --   'nvim-neorg/neorg',
+  --   build = ':Neorg sync-parsers',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-treesitter/nvim-treesitter',
+  --     { 'pysan3/neorg-templates', dependencies = { 'L3MON4D3/LuaSnip' } },
+  --   },
+  --   config = function()
+  --     vim.opt.conceallevel = 2
+  --     vim.opt.foldenable = false -- Disable folding by default
+  --
+  --     -- global keybinds
+  --     vim.keymap.set('n', '<leader>a', '<cmd>Neorg workspace home<CR>', { desc = 'Neorg home' })
+  --
+  --     -- keybinds when in .norg file
+  --     vim.api.nvim_create_autocmd('FileType', {
+  --       pattern = 'norg',
+  --       callback = function()
+  --         vim.keymap.set('n', '<leader>a', '<cmd>Neorg workspace home<CR>', { desc = 'Neorg home' })
+  --         vim.keymap.set('n', '<leader>1', '<cmd>Neorg workspace dsa<CR>', { buffer = true, desc = 'Switch to DSA workspace' })
+  --         vim.keymap.set('n', '<leader>2', '<cmd>Neorg workspace class<CR>', { buffer = true, desc = 'Switch to class workspace' })
+  --         vim.keymap.set('n', '<leader>3', '<cmd>Neorg workspace internship<CR>', { buffer = true, desc = 'Switch to internship workspace' })
+  --       end,
+  --     })
+  --
+  --     require('neorg').setup {
+  --       load = {
+  --         ['core.defaults'] = {},
+  --         ['core.concealer'] = {
+  --           config = {
+  --             icon_preset = 'diamond',
+  --           },
+  --         },
+  --         ['core.dirman'] = {
+  --           config = {
+  --             workspaces = {
+  --               home = '~/neorg/home/',
+  --               dsa = '~/neorg/dsa/',
+  --               class = '~/neorg/class/',
+  --               internship = '~/neorg/internship/',
+  --             },
+  --           },
+  --         },
+  --         ['core.integrations.treesitter'] = {
+  --           config = {
+  --             configure_parsers = true,
+  --             fold_markers = {
+  --               enabled = false, -- Disable automatic folding
+  --             },
+  --           },
+  --         },
+  --         ['external.templates'] = {
+  --           config = {
+  --             templates_dir = '~/neorg/templates',
+  --           },
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
 }
